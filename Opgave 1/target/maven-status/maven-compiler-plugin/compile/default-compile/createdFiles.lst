@@ -1,0 +1,8 @@
+backend\Main.class
+interfaces\IPersonFacade.class
+utility\JSONConverter.class
+backend\Facade.class
+rest\ApplicationConfig.class
+entity\Person.class
+entity\Person_.class
+rest\RestPerson.class
