@@ -6,7 +6,8 @@ public class Main {
         
         Facade facade = new Facade();
         
-        facade.demoAddPerson("Mike", "Tyson", 12345678);
+        //facade.demoAddPerson("Mike", "Tyson", 12345678);
+        facade.deletePerson(51l);
         
         facade.close();
         

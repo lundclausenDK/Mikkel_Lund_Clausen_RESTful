@@ -19,7 +19,7 @@ public class Facade implements IPersonFacade {
 
     @Override
     public Person addPerson(Person p) {
-        p = new Person();
+
         em.getTransaction().begin();
         
         p.setFirstName(p.getFirstName());
@@ -28,40 +28,60 @@ public class Facade implements IPersonFacade {
         
         em.persist(p);
         em.getTransaction().commit();
-               
+        
+        em.close();
         
         return p;
     }
 
     @Override
-    public Person deletePerson(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Person deletePerson(Long id) {
+        em.getTransaction().begin();
+        Person person = em.find(Person.class, id);
+        em.remove(person);
+        em.getTransaction().commit();
+        
+        return person;
     }
 
     @Override
-    public Person getPerson(int id) {
+    public Person getPerson(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Person> getPersons() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        List<Person> results = em.createQuery("SELECT p FROM Person p").getResultList();
+        
+        return results;
     }
 
     @Override
     public Person editPerson(Person p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.getTransaction().begin();
+        
+        Person person = em.find(Person.class, p.getId());
+        
+        person.setFirstName(p.getFirstName());
+        person.setLastName(p.getLastName());
+        person.setPhonenumber(p.getPhonenumber());
+        
+        em.getTransaction().commit();
+        
+        return person;
     }
     
     public void demoAddPerson(String firstname, String lastname, int phonenumber) {
-        Person p = new Person();
         em.getTransaction().begin();
         
-        p.setFirstName(firstname);
-        p.setLastName(lastname);
-        p.setPhonenumber(phonenumber);
+        Person person = new Person();
+                
+        person.setFirstName(firstname);
+        person.setLastName(lastname);
+        person.setPhonenumber(phonenumber);
         
-        em.persist(p);
+        em.persist(person);
         em.getTransaction().commit();
 
     }
